@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StarLadder Major Ranking (Fixed)</title>
+    <title>StarLadder Major Ranking (Final)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Teko:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
             --panel-bg: #15161a;
             --accent-orange: #ff9600;
             --accent-green: #00ff00; 
-            --accent-red: #ff0000;
+            --accent-red: #ff0000;   
             --text-white: #ffffff;
             --slot-empty: #1a1a1f;
             
@@ -35,6 +35,7 @@
             overflow: hidden;
         }
 
+        /* --- HEADER --- */
         .header-area {
             height: 100px;
             width: 100%;
@@ -54,8 +55,12 @@
             transition: transform 0.3s ease;
         }
 
-        .logo-img:hover { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(255, 150, 0, 0.6)); }
+        .logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 25px rgba(255, 150, 0, 0.6));
+        }
 
+        /* --- CONTROLS --- */
         .controls-area {
             width: 100%;
             display: flex;
@@ -67,8 +72,8 @@
 
         .control-btn {
             background: transparent;
-            color: var(--accent-orange);
             border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
             padding: 2px 24px;
             font-family: var(--font-ui);
             font-size: 1.3rem; 
@@ -95,10 +100,21 @@
             box-shadow: none;
         }
 
-        #submitBtn { border-color: var(--text-white); color: var(--text-white); }
-        #submitBtn:hover:not(:disabled) { background-color: var(--text-white); color: #000; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
-        #submitBtn:disabled { border-color: #444; color: #444; }
+        #submitBtn {
+            border-color: var(--text-white);
+            color: var(--text-white);
+        }
+        #submitBtn:hover:not(:disabled) {
+            background-color: var(--text-white);
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        #submitBtn:disabled {
+            border-color: #444;
+            color: #444;
+        }
 
+        /* --- MAIN CONTAINER --- */
         .main-container {
             flex: 1;
             display: flex;
@@ -123,7 +139,8 @@
             min-height: 0; 
         }
 
-        h2 {
+        /* Standard H2 for left side */
+        h2.standard-header {
             margin: 5px 0;
             color: var(--text-white);
             text-align: center;
@@ -135,15 +152,38 @@
             flex-shrink: 0;
         }
 
+        /* --- ALIGNED HEADER FOR RIGHT SIDE --- */
+        .header-aligned {
+            display: flex;
+            gap: 10px;
+            padding: 0 8px;
+            align-items: center;
+            margin: 5px 0;
+            flex-shrink: 0;
+        }
+        
+        .header-spacer { width: 40px; flex-shrink: 0; }
+        .header-text {
+            flex: 1;
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 1.5rem; 
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-white);
+            margin: 0;
+        }
+
         .card-pool, .timeline {
             display: flex;
             flex-direction: column;
             gap: 4px;
-            flex: 1; 
+            flex: 1;
             padding: 8px;
             background-image: linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px);
             background-size: 20px 20px;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .card-pool { justify-content: flex-start; }
@@ -151,7 +191,7 @@
         .slot-wrapper {
             display: flex;
             gap: 10px;
-            flex: 1; 
+            flex: 1;
             min-height: 0; 
         }
 
@@ -196,8 +236,7 @@
             
             font-family: var(--font-data);
             font-weight: 600;
-            font-size: clamp(0.7rem, 2vh, 1.1rem);
-            
+            font-size: clamp(0.7rem, 2vh, 1.1rem); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
             
@@ -217,6 +256,7 @@
         .card.dragging { opacity: 0.6; }
         .card.locked { cursor: default; }
 
+        /* --- RESULTS MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
@@ -235,16 +275,54 @@
             max-height: 90vh; overflow-y: auto;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-title { font-family: var(--font-ui); font-size: 3rem; color: var(--accent-orange); margin: 0 0 10px 0; text-transform: uppercase; }
-        .score-display { font-family: var(--font-ui); font-size: 1.5rem; color: #fff; margin-bottom: 20px; }
-        .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: var(--font-data); }
-        .comparison-table th { text-align: left; padding: 10px; color: #888; font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid #333; }
-        .comparison-table td { padding: 8px 10px; border-bottom: 1px solid #222; font-size: 1.1rem; }
+
+        .modal-title {
+            font-family: var(--font-ui);
+            font-size: 3rem; color: var(--accent-orange); margin: 0 0 10px 0; text-transform: uppercase;
+        }
+        .score-display {
+            font-family: var(--font-ui); font-size: 1.5rem; color: #fff; margin-bottom: 20px;
+        }
+
+        /* --- FIXED ALIGNMENT TABLE --- */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: var(--font-data);
+            table-layout: fixed; /* Ensures equal width */
+        }
+
+        .comparison-table th {
+            text-align: center;
+            padding: 10px;
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+        }
+
+        .comparison-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #222;
+            font-size: 1.1rem;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Force column widths */
+        .comparison-table th:first-child, .comparison-table td:first-child { width: 40px; }
+
         .correct-text { color: var(--accent-green); }
         .wrong-text { color: var(--accent-red); text-decoration: line-through; opacity: 0.7; }
         .actual-text { color: var(--accent-green); font-weight: bold; }
         .year-hint { color: #888; font-size: 0.9em; font-weight: normal; margin-left: 8px; }
-        .close-modal-btn { background: var(--accent-orange); color: #000; border: none; padding: 10px 30px; font-family: var(--font-ui); font-size: 1.2rem; text-transform: uppercase; cursor: pointer; font-weight: bold; }
+
+        .close-modal-btn {
+            background: var(--accent-orange); color: #000; border: none; padding: 10px 30px;
+            font-family: var(--font-ui); font-size: 1.2rem; text-transform: uppercase;
+            cursor: pointer; font-weight: bold;
+        }
         .close-modal-btn:hover { background: #fff; }
 
     </style>
@@ -262,23 +340,27 @@
 
     <div class="main-container">
         <div class="pool-container">
-            <h2>Events</h2>
+            <h2 class="standard-header">Events</h2>
             <div id="pool" class="card-pool">
-                <div class="card" draggable="true">DreamHack Open Cluj⁠-⁠Napoca</div>
-                <div class="card" draggable="true">MLG Major Championship: Columbus</div>
-                <div class="card" draggable="true">PGL Major Kraków</div>
-                <div class="card" draggable="true">ELEAGUE Major Boston</div>
-                <div class="card" draggable="true">StarLadder Berlin Major</div>
                 <div class="card" draggable="true">PGL Major Stockholm</div>
-                <div class="card" draggable="true">PGL Major Antwerp</div>
-                <div class="card" draggable="true">IEM Rio Major</div>
-                <div class="card" draggable="true">PGL Major Copenhagen</div>
+                <div class="card" draggable="true">DreamHack Open Cluj⁠-⁠Napoca</div>
                 <div class="card" draggable="true">StarLadder Budapest Major</div>
+                <div class="card" draggable="true">IEM Rio Major</div>
+                <div class="card" draggable="true">MLG Major Championship: Columbus</div>
+                <div class="card" draggable="true">PGL Major Antwerp</div>
+                <div class="card" draggable="true">StarLadder Berlin Major</div>
+                <div class="card" draggable="true">PGL Major Copenhagen</div>
+                <div class="card" draggable="true">ELEAGUE Major Boston</div>
+                <div class="card" draggable="true">PGL Major Kraków</div>
             </div>
         </div>
 
         <div class="ranking-container">
-            <h2>Timeline (Newest to Oldest)</h2>
+            <div class="header-aligned">
+                <div class="header-spacer"></div>
+                <h2 class="header-text">Timeline (Newest to Oldest)</h2>
+            </div>
+            
             <div class="timeline">
                 <div class="slot-wrapper"><div class="rank-number">1</div><div class="slot"></div></div>
                 <div class="slot-wrapper"><div class="rank-number">2</div><div class="slot"></div></div>
@@ -307,7 +389,8 @@
                         <th>Correct Pick</th>
                     </tr>
                 </thead>
-                <tbody id="comparisonBody"></tbody>
+                <tbody id="comparisonBody">
+                    </tbody>
             </table>
 
             <button class="close-modal-btn" onclick="closeModal()">Close</button>
@@ -315,7 +398,7 @@
     </div>
 
 <script>
-    // Correct Order
+    // Correct Order: NEWEST (Rank 1) -> OLDEST (Rank 10)
     const correctOrder = [
         "StarLadder Budapest Major",
         "PGL Major Copenhagen",
@@ -334,6 +417,7 @@
         "(2019)", "(2018)", "(2017)", "(2016)", "(2015)"
     ];
 
+    const cards = document.querySelectorAll('.card');
     const slots = document.querySelectorAll('.slot');
     const pool = document.getElementById('pool');
     const undoBtn = document.getElementById('undoBtn');
@@ -345,34 +429,17 @@
     let draggedCard = null;
     let originSlot = null;
 
-    // --- 1. SHUFFLE FIRST ---
-    function shufflePool() {
-        let poolCards = Array.from(pool.querySelectorAll('.card'));
-        for (let i = poolCards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [poolCards[i], poolCards[j]] = [poolCards[j], poolCards[i]];
-        }
-        poolCards.forEach(card => pool.appendChild(card));
-    }
-    shufflePool();
-
-    // --- 2. THEN ADD LISTENERS ---
-    // Important: Select cards AFTER they might have moved in DOM
+    // --- Drag & Drop Logic ---
     const allCards = document.querySelectorAll('.card');
 
     allCards.forEach(card => {
         card.addEventListener('dragstart', function(e) {
             if(isLocked) { e.preventDefault(); return; }
-            
-            // *** CRITICAL FIX FOR DRAG BUG ***
-            // Firefox/Chrome requires data to be set for drag to initiate
             e.dataTransfer.setData('text/plain', '');
-            
             this.classList.add('dragging');
             draggedCard = this;
             originSlot = this.parentNode;
         });
-
         card.addEventListener('dragend', function() {
             this.classList.remove('dragging');
             draggedCard = null;
@@ -384,14 +451,12 @@
     allDropZones.forEach(zone => {
         zone.addEventListener('dragover', e => {
             if(isLocked) return;
-            e.preventDefault(); // Necessary to allow dropping
+            e.preventDefault();
             if(zone.classList.contains('slot')) zone.classList.add('drag-over');
         });
-        
         zone.addEventListener('dragleave', () => {
             if(zone.classList.contains('slot')) zone.classList.remove('drag-over');
         });
-        
         zone.addEventListener('drop', dragDrop);
     });
 
@@ -406,18 +471,15 @@
 
         if (this.classList.contains('slot')) {
             if (this.children.length === 0) {
-                // Move to empty slot
                 action = { type: 'move', card: draggedCard, from: originSlot, to: this };
                 this.appendChild(draggedCard);
             } else {
-                // Swap
                 const existingCard = this.children[0];
                 action = { type: 'swap', cardInHand: draggedCard, cardInSlot: existingCard, from: originSlot, to: this };
                 originSlot.appendChild(existingCard);
                 this.appendChild(draggedCard);
             }
         } else if (this.id === 'pool') {
-            // Move back to pool
             action = { type: 'move', card: draggedCard, from: originSlot, to: this };
             this.appendChild(draggedCard);
         }
@@ -471,7 +533,6 @@
             const correctYear = correctYears[index];
             const rank = index + 1;
             
-            // Compare Uppercase to allow case-insensitive matching
             let isCorrect = (userText.toUpperCase() === correctText.toUpperCase());
 
             if(isCorrect) {
@@ -486,7 +547,7 @@
                     <td>${rank}</td>
                     <td class="${isCorrect ? 'correct-text' : 'wrong-text'}">${userText}</td>
                     <td>
-                        <span class="actual-text">${correctText}</span>
+                        <span class="actual-text">${correctText.toUpperCase()}</span>
                         <span class="year-hint">${correctYear}</span>
                     </td>
                 </tr>
